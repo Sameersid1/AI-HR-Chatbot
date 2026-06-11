@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ChatInterface from '../components/chat/ChatInterface';
 import { Coffee, CalendarHeart, Sparkles, BookOpen, Clock, X, BadgeHelp, HeartPulse } from 'lucide-react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const StatCard = ({ icon: Icon, title, value, colorClass }) => (
   <div className="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 flex items-center space-x-4 transition-transform hover:-translate-y-1 duration-300">
@@ -24,7 +25,7 @@ const EmployeeDashboard = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/tickets/create', ticketData);
+      await axios.post(`${API_URL}/api/tickets/create`, ticketData);
       setIsModalOpen(false);
       setTicketData({ title: '', description: '', priority: 'Medium' });
       alert("Ticket submitted successfully! HR will review it soon.");

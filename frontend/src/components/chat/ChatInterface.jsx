@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Send, AlertCircle, HelpCircle } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +12,7 @@ const ChatInterface = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/chat/history');
+        const { data } = await axios.get(`${API_URL}/api/chat/history`);
         const formatted = data.map(m => ({
           text: m.content,
           sender: m.sender,
@@ -41,7 +42,7 @@ const ChatInterface = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/chat/ask', { query });
+      const { data } = await axios.post(`${API_URL}/api/chat/ask`, { query });
       
       const botMessage = {
         text: data.chatResponse.content,

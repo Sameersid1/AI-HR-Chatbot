@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import { Ticket as TicketIcon, Search, AlertCircle, Clock, CheckCircle } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
@@ -9,7 +10,7 @@ const TicketList = () => {
 
   const fetchTickets = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/tickets');
+      const { data } = await axios.get(`${API_URL}/api/tickets`);
       setTickets(data);
     } catch (error) {
       console.error('Error fetching tickets:', error);
@@ -20,7 +21,7 @@ const TicketList = () => {
 
   useEffect(() => {
     fetchTickets();
-    const socket = io('http://localhost:5000');
+    const socket = io(`${API_URL}`);
     socket.on('newTicket', () => fetchTickets());
     return () => socket.disconnect();
   }, []);

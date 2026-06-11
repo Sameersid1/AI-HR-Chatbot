@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import TicketList from '../components/tickets/TicketList';
 import { Users, LayoutDashboard, Flag, UserPlus, UploadCloud, FileText } from 'lucide-react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const StatCard = ({ icon: Icon, title, value, subtitle, gradientFrom, gradientTo }) => (
   <div className={`rounded-2xl p-6 shadow-sm border border-stone-100 relative overflow-hidden bg-gradient-to-br ${gradientFrom} ${gradientTo}`}>
@@ -39,7 +40,7 @@ const HRDashboard = () => {
     e.preventDefault();
     setEmpStatus({ loading: true, message: '', isError: false });
     try {
-      await axios.post('http://localhost:5000/api/auth/register', empData);
+      await axios.post(`${API_URL}/api/auth/register`, empData);
       setEmpStatus({ loading: false, message: 'Employee account created securely!', isError: false });
       setEmpData({ name: '', email: '', password: '', department: 'Engineering', role: 'Employee' });
       setTimeout(() => setEmpStatus({ loading: false, message: '', isError: false }), 4000);
@@ -59,7 +60,7 @@ const HRDashboard = () => {
     formData.append('document', policyFile);
 
     try {
-      await axios.post('http://localhost:5000/api/policy/upload', formData, {
+      await axios.post(`${API_URL}/api/policy/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setPolicyStatus({ loading: false, message: 'Policy successfully integrated with AI constraints!', isError: false });
